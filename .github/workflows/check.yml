@@ -15,6 +15,7 @@ jobs:
           distribution: temurin
           java-version: 21
           cache: sbt
+      - uses: sbt/setup-sbt@v1
       - name: Check scalafmtCheck
         run: sbt scalafmtCheckAll scalafmtSbtCheck
   test:
@@ -28,5 +29,6 @@ jobs:
           distribution: temurin
           java-version: 21
           cache: sbt
+      - uses: sbt/setup-sbt@v1
       - name: Tests
         run: sbt test

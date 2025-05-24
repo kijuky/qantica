@@ -108,10 +108,10 @@ println(re1.showSimplified)
 
 ## 名前の由来
 
-quantica は「quantity（物理量）」と「algebraic（代数的）」を掛け合わせた造語です。
+qantica は「quantity（物理量）」と「algebraic（代数的）」を掛け合わせた造語です。
 
 ---
 
 ## ライセンス
 
-MIT
+[MIT](./LICENSE)

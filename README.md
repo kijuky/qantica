@@ -112,4 +112,4 @@ This library was born from a key insight:
 
 ## License
 
-MIT
+[MIT](./LICENSE)
