@@ -15,6 +15,7 @@ class QuantitySpec extends AnyFunSpec {
     type Density = DimExp.Div[Mass, DimExp.Pow[Length, 3.0]]
     type Viscosity = DimExp.Div[Mass, DimExp.Mul[Length, Time]]
     type KinViscosity = DimExp.Div[DimExp.Pow[Length, 2.0], Time]
+    type Acceleration = DimExp.Div[Length, DimExp.Pow[Time, 2.0]]
 
     // 元の物理量を用意
     val v: Quantity[Velocity] = Quantity(2.0)
@@ -22,12 +23,14 @@ class QuantitySpec extends AnyFunSpec {
     val rho: Quantity[Density] = Quantity(1000.0)
     val mu: Quantity[Viscosity] = Quantity(1.0)
     val nu = mu / rho // 動粘性係数
+    val g: Quantity[Acceleration] = Quantity(9.8)
 
     it("should preserve structure in type") {
       val re1 = rho * L * v / mu
       val re2 = rho * v * L / mu
 
       assert(re1 === re2)
+      "assert(re1 === re2)" should compile
     }
 
     it("should not allow comparing different computation histories") {
@@ -63,11 +66,9 @@ class QuantitySpec extends AnyFunSpec {
 
     it("should not allow comparing different dimensions") {
       val re = rho * L * v / mu
-      val gr
-        : Quantity[DimExp.Div[DimExp.Pow[Length, 3.0], DimExp.Pow[Time, 2.0]]] =
-        Quantity(1000.0)
+      val gr = g * rho * rho * L * L * L / (mu * mu)
 
-      "assert(re1 === gr)" shouldNot compile
+      "assert(re === gr)" shouldNot compile
     }
   }
 }

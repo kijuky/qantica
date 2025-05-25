@@ -19,10 +19,10 @@ case class Quantity[E <: DimExp](value: Double):
     s"$value [${ShowSimplified3.simplify[E]}]"
 
   def *[V <: DimExp](that: Quantity[V]): Quantity[DimExp.Mul[E, V]] =
-    Quantity[DimExp.Mul[E, V]](this.value * that.value)
+    Quantity(this.value * that.value)
 
   def /[V <: DimExp](that: Quantity[V]): Quantity[DimExp.Div[E, V]] =
-    Quantity[DimExp.Div[E, V]](this.value / that.value)
+    Quantity(this.value / that.value)
 
 trait ConvertIfCompatible[A <: DimExp, B <: DimExp] {
   def convert(q: Quantity[A]): Quantity[B]
@@ -82,7 +82,7 @@ type NormalizedT[E <: DimExp] <: Tuple = E match
 
 type ToIntersection[T <: Tuple] <: Any = T match
   case EmptyTuple               => Any
-  case DimPower[d, 0.0] *: tail => ToIntersection[tail] // ← 0.0 の要素を除外
+  case DimPower[_, 0.0] *: tail => ToIntersection[tail] // ← 0.0 の要素を除外
   case h *: t                   => h & ToIntersection[t]
 
 type NormalizedAsIntersection[E <: DimExp] = ToIntersection[NormalizedT[E]]
